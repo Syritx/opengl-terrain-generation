@@ -10,7 +10,7 @@ namespace terrain_generation
         Vector3[] vertices;
         int length = 100;
         float intensity = .1f;
-        int layers = 25;
+        int layers = 15;
         int min = -10, max = 10;
 
         public Game(int width, int height)
@@ -28,7 +28,7 @@ namespace terrain_generation
             Resize += resize;
             Load += load;
 
-            GL.Translate(0, -40, 0);
+            GL.Translate(0, -20, 0);
             Run(60);
         }
 
@@ -38,9 +38,9 @@ namespace terrain_generation
 
             // rendering terrain
             for (int i = 0; i < vertices.Length; i++) {
-                GL.Begin(BeginMode.LineStrip); // CHANGE THIS TO QUAD
+                GL.Begin(PrimitiveType.Quads); // CHANGE THIS TO QUAD
 
-                GL.Color3(1.0, 1.0, 1.0);
+                GL.Color3((double)114 / 255, (double)179 / 255, (double)29 / 255);
                 GL.Vertex3(vertices[i]);
 
                 try {
@@ -57,6 +57,17 @@ namespace terrain_generation
 
                 GL.End();
             }
+
+            GL.Enable(EnableCap.Fog);
+
+            // Fog
+            float[] colors = { 230, 230, 230 };
+            GL.Fog(FogParameter.FogMode, (int)FogMode.Linear);
+            GL.Hint(HintTarget.FogHint, HintMode.Nicest);
+            GL.Fog(FogParameter.FogColor, colors);
+
+            GL.Fog(FogParameter.FogStart, (float)1000 / 100.0f);
+            GL.Fog(FogParameter.FogEnd, 250.0f);
 
             SwapBuffers();
         }
