@@ -20,6 +20,12 @@ namespace terrain_generation
         }
 
         void start() {
+        
+            Random rMin = new Random();
+            Random rMax = new Random();
+
+            min = rMin.Next(-4, -2);
+            max = rMax.Next(5, 15);
 
             // creating heightMaps
             vertices = Noise.GenerateHeightMaps(layers, length, intensity, min, max);
